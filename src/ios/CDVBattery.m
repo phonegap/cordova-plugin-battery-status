@@ -46,9 +46,6 @@
     // save callback id
     self.callbackId = command.callbackId;
 
-    // get up to date battery info
-    self.getBattery = [self getBatteryInfo];
-
     // register for battery changes
     if ([UIDevice currentDevice].batteryMonitoringEnabled == NO) {
         [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
@@ -57,6 +54,9 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBatteryStatus:)
                                                      name:UIDeviceBatteryLevelDidChangeNotification object:nil];
     }
+
+    // get up to date battery info
+    self.getBattery = [self getBatteryInfo];
 
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary: self.getBattery];
     [result setKeepCallbackAsBool:YES];
